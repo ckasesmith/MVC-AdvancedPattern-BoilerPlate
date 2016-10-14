@@ -1,0 +1,49 @@
+﻿@model WebApp.ViewModels.AddressViewModel
+
+
+<h4>Address</h4>
+<hr />
+@Html.HiddenFor(model => model.UserId)
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.CountryId)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Country.CountryName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.StateParishId)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.StateParish.StateParishName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.AddressName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AddressName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.AddressLn1)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AddressLn1)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.AddressLn2)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AddressLn2)
+    </dd>
+
+</dl>
+

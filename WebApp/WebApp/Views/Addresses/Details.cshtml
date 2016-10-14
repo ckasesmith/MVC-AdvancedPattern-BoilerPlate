@@ -1,0 +1,16 @@
+﻿@model WebApp.ViewModels.AddressViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    @Html.Partial("~/Views/Addresses/_DetailsDeletePartialView.cshtml")
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AddressId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
