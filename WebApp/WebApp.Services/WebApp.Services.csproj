@@ -103,22 +103,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="Implementations\System\BaseService.cs" />
+    <Compile Include="Implementations\System\BaseVmMapper.cs" />
+    <Compile Include="Implementations\System\BaseVMService.cs" />
     <Compile Include="Implementations\UserInfo\AddressService.cs" />
-    <Compile Include="Interfaces\ICrud.cs" />
-    <Compile Include="Interfaces\ISelectListLookup.cs" />
-    <Compile Include="Interfaces\IViewModelMapper.cs" />
-    <Compile Include="Interfaces\BaseService.cs" />
+    <Compile Include="Interfaces\System\ICrud.cs" />
+    <Compile Include="Interfaces\System\ICrudViewModel.cs" />
+    <Compile Include="Interfaces\System\ISelectListLookup.cs" />
+    <Compile Include="Interfaces\System\IViewModelMapper.cs" />
     <Compile Include="Interfaces\UserInfo\IAddressService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\Accounting\" />
-    <Folder Include="Implementations\Inventory\" />
-    <Folder Include="Implementations\Shopping Cart\" />
-    <Folder Include="Interfaces\Accounting\" />
-    <Folder Include="Interfaces\Inventory\" />
-    <Folder Include="Interfaces\Shopping Cart\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

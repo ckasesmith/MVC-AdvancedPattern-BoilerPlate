@@ -32,7 +32,7 @@ namespace WebApp.Repositories.Interfaces
 
         void Add(T entity);
 
-        void Update(TKey key, T entity);
+        void Update(T entity);
 
         void Remove(T entity);
         void Remove(TKey key);

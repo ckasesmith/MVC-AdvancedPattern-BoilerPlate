@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using WebApp.Models;
 using WebApp.Repositories.Interfaces;
-using WebApp.Services.Implementations.System;
+using WebApp.Services.Interfaces;
 using WebApp.Services.Interfaces.UserInfo;
 using WebApp.ViewModels;
 
@@ -18,7 +18,7 @@ namespace WebApp.Services.Implementations.UserInfo
     /// This BaseClass is not a requirement for services, it just implements the default crud operations
     /// The Interface is the most important part of this, where it determines what features the service has
     /// </summary>
-    public class AddressService : BaseVmService<AddressViewModel, Address, int>, IAddressService<AddressViewModel, Address, int>
+    public class AddressService : BaseService<AddressViewModel, Address, int>, IAddressService<AddressViewModel, Address, int>
     {
         private readonly IRepository<Country, int> _countryRepository;
         private readonly IRepository<StateParish, int> _stateParishRepository;
@@ -54,21 +54,16 @@ namespace WebApp.Services.Implementations.UserInfo
             return SetupSelectList(base.EditGet(id));
         }
 
-        public override AddressViewModel EditPost(AddressViewModel viewModel)
+        public override AddressViewModel EditPost(AddressViewModel viewModel, int key)
         {
             viewModel.UserId = Thread.CurrentPrincipal.Identity.GetUserId();
-            return SetupSelectList(base.EditPost(viewModel));
+            return SetupSelectList(base.EditPost(viewModel, key));
         }
 
         public override AddressViewModel CreatePostFailed(AddressViewModel viewModel)
         {
             viewModel.UserId = Thread.CurrentPrincipal.Identity.GetUserId();
             return SetupSelectList(base.CreatePostFailed(viewModel));
-        }
-
-        public override AddressViewModel EditPostFailed(AddressViewModel viewModel)
-        {
-            return SetupSelectList(base.EditPostFailed(viewModel));
         }
 
         public AddressViewModel SetupSelectList(AddressViewModel viewModel)

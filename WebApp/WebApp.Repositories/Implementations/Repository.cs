@@ -17,13 +17,12 @@ namespace WebApp.Repositories.Implementations
         public Repository(TrackerIdentityContext<ApplicationUser> newDbContext)
         {
             _dataContext = newDbContext;
-            _dataContext.Configuration.AutoDetectChangesEnabled = false;
             DBset = Set();
-
         }
+
         public IQueryable<T> GetAll()
         {
-            return GetQuery().AsNoTracking();
+            return GetQuery();
         }
 
 
@@ -31,39 +30,39 @@ namespace WebApp.Repositories.Implementations
         {
             if (maxHits == 0)
             {
-                return GetQuery().AsNoTracking().Where(expression);
+                return GetQuery().Where(expression);
             }
-            return GetQuery().AsNoTracking().Where(expression).Take(100);
+            return GetQuery().Where(expression).Take(100);
         }
         public IQueryable<T> WhereNoTrack(Expression<Func<T, bool>> expression, int maxHits = 0)
         {
             if (maxHits == 0)
             {
-                return GetQuery().AsNoTracking().Where(expression);
+                return GetQuery().Where(expression);
             }
-            return GetQuery().AsNoTracking().Where(expression).Take(100);
+            return GetQuery().Where(expression).Take(100);
         }
 
 
         public T FirstOrDefault(Expression<Func<T, bool>> expression)
         {
-            return GetQuery().AsNoTracking().FirstOrDefault(expression);
+            return GetQuery().FirstOrDefault(expression);
         }
 
         public T FirstOrDefaultNoTrack(Expression<Func<T, bool>> expression)
         {
-            return GetQuery().AsNoTracking().FirstOrDefault(expression);
+            return GetQuery().FirstOrDefault(expression);
         }
 
         public IQueryable<T> Page(int page = 0, int pageSize = 10)
         {
-            return GetQuery().AsNoTracking().Skip(page * pageSize).Take(pageSize);
+            return GetQuery().Skip(page * pageSize).Take(pageSize);
         }
 
 
         public virtual int Count(Expression<Func<T, bool>> expression)
         {
-            return DBset.AsNoTracking().Count(expression);
+            return DBset.Count(expression);
         }
 
         public void Add(T entity)
@@ -71,10 +70,14 @@ namespace WebApp.Repositories.Implementations
             DBset.Add(entity);
         }
 
-        public void Update(TKey key, T entity)
+        public void Update(T entity)
         {
-            var savedrecord = DBset.Find(key);
-            _dataContext.Entry(savedrecord).CurrentValues.SetValues(entity);
+            var status = _dataContext.Entry(entity).State;
+            if (status == EntityState.Detached)
+            {
+                _dataContext.Set<T>().Attach(entity);
+            }
+            _dataContext.Entry(entity).State = EntityState.Modified;
 
         }
 
@@ -107,16 +110,19 @@ namespace WebApp.Repositories.Implementations
 
         public bool Any(Expression<Func<T, bool>> expression)
         {
-            return DBset.AsNoTracking().Any(expression);
+            return DBset.Any(expression);
         }
 
         public void UpdateAll(IEnumerable<T> entities)
         {
             foreach (var entity in entities)
             {
-                var entry = _dataContext.Entry(entity);
-                DBset.Attach(entity);
-                entry.State = EntityState.Modified;
+                var status = _dataContext.Entry(entity).State;
+                if (status == EntityState.Detached)
+                {
+                    _dataContext.Set<T>().Attach(entity);
+                }
+                _dataContext.Entry(entity).State = EntityState.Modified;
 
             }
             _dataContext.SaveChanges();
@@ -129,14 +135,11 @@ namespace WebApp.Repositories.Implementations
 
         private IQueryable<T> GetQuery()
         {
-            return DBset.AsNoTracking();
+            return DBset;
         }
 
         public void Dispose()
-        {
-
-            //_dataContext.Dispose();
-
+        {//_dataContext.Dispose();
         }
 
 

@@ -88,7 +88,7 @@ namespace WebApp.Controllers
         {
             if (!ModelState.IsValid) return View(address);
             //address.UserId = User.Identity.GetUserId();
-            _addressService.EditPost(address, address.AddressId);
+            _addressService.EditPost(address);
             return RedirectToAction("Index");
         }
 
