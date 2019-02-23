@@ -11,4 +11,7 @@
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
   </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.Net.Component.4.6.2.TargetingPack" Version="[15.6.27406.0,16.0)" DisplayName=".NET Framework 4.6.2 targeting pack" />
+  </Prerequisites>
 </PackageManifest>
